@@ -1,0 +1,255 @@
+# Solution CORS Directe - React (Vite) avec Backend Spring Boot
+
+## Prompt pour résolution immédiate
+Pour résoudre immédiatement le problème CORS entre votre frontend React (Vite) et votre backend Spring Boot, suivez ces étapes précises :
+
+1. Dans votre projet React, modifiez ou créez `vite.config.ts` avec exactement :
+```typescript
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+
+export default defineConfig({
+  plugins: [react()],
+  server: {
+    proxy: {
+      '/v1': {
+        target: 'http://localhost:8085',
+        changeOrigin: true,
+        secure: false,
+        rewrite: (path) => `/api${path}`,
+        headers: {
+          'Origin': 'http://localhost:8085'
+        },
+        configure: (proxy, _options) => {
+          proxy.on('proxyReq', (proxyReq) => {
+            proxyReq.setHeader('Origin', 'http://localhost:8085');
+          });
+        }
+      }
+    }
+  }
+})
+```
+
+2. Dans votre dossier `src/api`, créez ou modifiez `apiClient.ts` avec exactement :
+```typescript
+import axios from 'axios';
+
+const API_BASE_URL = '/v1';
+
+const apiClient = axios.create({
+  baseURL: API_BASE_URL,
+  headers: {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  },
+  withCredentials: false
+});
+
+export default apiClient;
+
+export const authApi = {
+  register: (userData: any) => 
+    apiClient.post('/auth/user/register', userData),
+  
+  validateAccount: (verificationCode: string) => 
+    apiClient.put(`/auth/user/validateAccount/${verificationCode}`),
+  
+  login: (credentials: { email: string; password: string }) => 
+    apiClient.post('/auth/user/token', credentials),
+};
+```
+
+3. Installez les dépendances nécessaires :
+```bash
+npm install axios @types/node --save-dev
+```
+
+4. Redémarrez votre serveur de développement :
+```bash
+npm run dev
+```
+
+Cette configuration fonctionnera immédiatement avec :
+- Frontend React/Vite sur http://localhost:5173
+- Backend Spring Boot sur http://localhost:8085
+- API REST avec endpoints commençant par /api/v1
+
+## Vérification rapide
+Pour vérifier que tout fonctionne :
+1. Ouvrez la console développeur de votre navigateur
+2. Allez sur votre page d'inscription
+3. Tentez une inscription
+4. Vous ne devriez plus voir d'erreurs CORS
+
+---
+
+# Historique de débogage CORS - Application React avec Backend Spring Boot
+
+## Problème initial
+L'application frontend React (Vite) sur http://localhost:5173 ne pouvait pas communiquer avec le backend Spring Boot sur http://localhost:8085 à cause d'une erreur CORS :
+
+```
+Cross-Origin Request Blocked: The Same Origin Policy disallows reading the remote resource at http://localhost:8085/api/v1/auth/user/register. (Reason: CORS header 'Access-Control-Allow-Origin' missing). Status code: 403.
+```
+
+## Étapes de débogage et solutions testées
+
+### 1. Première tentative - Configuration initiale du proxy Vite
+Configuration initiale dans vite.config.ts :
+```typescript
+export default defineConfig({
+  plugins: [react()],
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8085',
+        changeOrigin: true,
+        secure: false,
+      }
+    }
+  }
+})
+```
+
+Résultat : Erreur "Parsing Error: syntax error" - La requête n'atteignait pas correctement le backend.
+
+### 2. Deuxième tentative - Modification des chemins d'API
+Modification de apiClient.ts pour utiliser des chemins relatifs :
+```typescript
+const API_BASE_URL = '/api/v1';  // Changé de 'http://localhost:8085/api/v1'
+```
+
+Résultat : Toujours une erreur 403, mais différente - "Invalid CORS request"
+
+### 3. Troisième tentative - Configuration détaillée du proxy
+Ajout de logs et gestion du corps de la requête :
+```typescript
+server: {
+  proxy: {
+    '/v1': {
+      target: 'http://localhost:8085',
+      changeOrigin: true,
+      secure: false,
+      rewrite: (path) => `/api${path}`,
+      configure: (proxy, _options) => {
+        proxy.on('proxyReq', (proxyReq, req) => {
+          if (req.body) {
+            const bodyData = JSON.stringify(req.body);
+            proxyReq.setHeader('Content-Type', 'application/json');
+            proxyReq.setHeader('Content-Length', Buffer.byteLength(bodyData));
+            proxyReq.write(bodyData);
+          }
+        });
+      }
+    }
+  }
+}
+```
+
+Résultat : Erreur CORS persistante, mais avec plus d'informations de débogage.
+
+### 4. Solution finale fonctionnelle
+
+#### 4.1 Configuration finale de vite.config.ts
+```typescript
+export default defineConfig({
+  plugins: [react()],
+  server: {
+    proxy: {
+      '/v1': {
+        target: 'http://localhost:8085',
+        changeOrigin: true,
+        secure: false,
+        rewrite: (path) => `/api${path}`,
+        headers: {
+          'Origin': 'http://localhost:8085'
+        },
+        configure: (proxy, _options) => {
+          proxy.on('proxyReq', (proxyReq) => {
+            proxyReq.setHeader('Origin', 'http://localhost:8085');
+          });
+        }
+      }
+    }
+  }
+})
+```
+
+#### 4.2 Configuration finale de apiClient.ts
+```typescript
+const API_BASE_URL = '/v1';
+
+const apiClient = axios.create({
+  baseURL: API_BASE_URL,
+  headers: {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  },
+  withCredentials: false
+});
+```
+
+## Explication des changements clés qui ont résolu le problème
+
+1. **Modification du chemin de base** :
+   - Changement de '/api/v1' à '/v1' pour éviter la double inclusion de '/api'
+   - Le proxy Vite ajoute automatiquement '/api' via la règle de réécriture
+
+2. **Configuration du proxy** :
+   - Utilisation de 'rewrite' pour ajouter '/api' au chemin
+   - Définition de l'origine comme étant le backend pour éviter les problèmes CORS
+   - Désactivation de la vérification SSL avec secure: false
+
+3. **Configuration Axios** :
+   - Ajout de l'en-tête 'Accept'
+   - Désactivation de withCredentials pour éviter les problèmes de cookies CORS
+   - Simplification des en-têtes de requête
+
+## Points clés pour reproduire les erreurs (à des fins pédagogiques)
+
+1. **Erreur CORS initiale** :
+   - Utiliser une URL complète dans API_BASE_URL
+   - Ne pas configurer le proxy dans Vite
+
+2. **Erreur de parsing** :
+   - Mal configurer les chemins entre le proxy et l'API_BASE_URL
+   - Créer une double inclusion de '/api' dans les chemins
+
+3. **Erreur "Invalid CORS request"** :
+   - Ne pas définir l'en-tête Origin correct
+   - Utiliser withCredentials: true sans la configuration CORS appropriée
+
+## Bonnes pratiques identifiées
+
+1. **Configuration du proxy** :
+   - Toujours utiliser changeOrigin: true
+   - Configurer les en-têtes appropriés
+   - Utiliser la réécriture de chemin pour la cohérence
+
+2. **Configuration Axios** :
+   - Utiliser des chemins relatifs
+   - Configurer les en-têtes appropriés
+   - Gérer correctement les credentials
+
+3. **Débogage** :
+   - Utiliser les intercepteurs pour logger les requêtes
+   - Vérifier les en-têtes de requête et de réponse
+   - Tester avec différentes configurations de proxy
+
+## Notes importantes
+
+1. Cette solution fonctionne spécifiquement pour :
+   - Frontend React/Vite sur http://localhost:5173
+   - Backend Spring Boot sur http://localhost:8085
+   - API REST avec endpoints commençant par /api/v1
+
+2. Pour adapter à d'autres configurations :
+   - Ajuster les URLs et ports selon votre environnement
+   - Modifier les chemins d'API selon votre structure
+   - Adapter les en-têtes selon les besoins de sécurité
+
+3. Pour le développement vs production :
+   - Cette configuration est pour le développement
+   - En production, considérer une configuration différente
+   - Potentiellement servir le frontend depuis le même domaine 
