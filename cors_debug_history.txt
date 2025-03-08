@@ -55,10 +55,10 @@ export const authApi = {
     apiClient.post('/auth/user/register', userData),
   
   validateAccount: (verificationCode: string) => 
-    apiClient.put(`/auth/user/validateAccount/${verificationCode}`),
+    apiClient.get(`/auth/user/validate/${verificationCode}`),
   
   login: (credentials: { email: string; password: string }) => 
-    apiClient.post('/auth/user/token', credentials),
+    apiClient.post('/auth/user/login', credentials),
 };
 ```
 
@@ -77,12 +77,77 @@ Cette configuration fonctionnera immédiatement avec :
 - Backend Spring Boot sur http://localhost:8085
 - API REST avec endpoints commençant par /api/v1
 
+## Endpoints de l'API
+Les endpoints configurés sont :
+- Register: POST /api/v1/auth/user/register
+- Validate: PUT /api/v1/auth/validateAccount/{verificationCode}
+- Login: POST /api/v1/auth/token
+
+## Format des requêtes
+
+### Register
+```json
+POST /api/v1/auth/user/register
+Content-Type: application/json
+
+{
+  "firstName": "string",
+  "lastName": "string",
+  "email": "string",
+  "password": "string",
+  "phone": "string",
+  "profilePicture": "string",
+  "roleTypes": "USER"
+}
+```
+
+### Validate Account
+```
+PUT /api/v1/auth/validateAccount/{verificationCode}
+Content-Type: application/json
+```
+(pas de body requis)
+
+### Login
+```json
+POST /api/v1/auth/token
+Content-Type: application/json
+
+{
+  "email": "string",
+  "password": "string"
+}
+```
+
+## Configuration détaillée des requêtes
+
+### Headers par défaut
+```typescript
+headers: {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+```
+
+### Méthodes HTTP supportées
+- POST pour /register
+- PUT pour /validateAccount
+- POST pour /login
+
+### Gestion des erreurs
+- 401: Redirection automatique vers /login
+- 403: Problème d'autorisation ou CORS
+- Autres erreurs: Loggées dans la console
+
 ## Vérification rapide
 Pour vérifier que tout fonctionne :
 1. Ouvrez la console développeur de votre navigateur
-2. Allez sur votre page d'inscription
-3. Tentez une inscription
-4. Vous ne devriez plus voir d'erreurs CORS
+2. Testez chaque endpoint dans cet ordre :
+   - Inscription (/register)
+   - Validation (/validate avec le code reçu)
+   - Connexion (/login)
+3. Vérifiez dans la console qu'il n'y a pas d'erreurs CORS
+4. Vérifiez que les réponses du serveur sont bien reçues
 
 ---
 

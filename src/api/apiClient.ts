@@ -18,13 +18,6 @@ apiClient.interceptors.request.use(
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
-    // Log de la requête pour débogage
-    console.log('Request Config:', {
-      url: config.url,
-      method: config.method,
-      headers: config.headers,
-      data: config.data
-    });
     return config;
   },
   (error) => {
@@ -34,23 +27,9 @@ apiClient.interceptors.request.use(
 
 // Intercepteur pour gérer les erreurs de réponse
 apiClient.interceptors.response.use(
-  (response) => {
-    console.log('Response:', response.data);
-    return response;
-  },
+  (response) => response,
   (error) => {
-    // Gérer les erreurs globales ici (ex: 401 Unauthorized, etc.)
-    if (error.response) {
-      console.error('Error Response:', {
-        status: error.response.status,
-        data: error.response.data,
-        headers: error.response.headers
-      });
-    } else {
-      console.error('Error:', error.message);
-    }
-    
-    if (error.response && error.response.status === 401) {
+    if (error.response?.status === 401) {
       localStorage.removeItem('token');
       window.location.href = '/login';
     }
@@ -66,8 +45,8 @@ export const authApi = {
     apiClient.post('/auth/user/register', userData),
   
   validateAccount: (verificationCode: string) => 
-    apiClient.put(`/auth/user/validateAccount/${verificationCode}`),
+    apiClient.put(`/auth/validateAccount/${verificationCode}`, null),
   
   login: (credentials: { email: string; password: string }) => 
-    apiClient.post('/auth/user/token', credentials),
+    apiClient.post('/auth/token', credentials),
 }; 
