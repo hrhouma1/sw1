@@ -1,4 +1,6 @@
+----
 # Solution CORS Directe - React (Vite) avec Backend Spring Boot
+----
 
 ## Prompt pour résolution immédiate
 Pour résoudre immédiatement le problème CORS entre votre frontend React (Vite) et votre backend Spring Boot, suivez ces étapes précises :
