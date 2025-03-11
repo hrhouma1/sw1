@@ -1,150 +1,226 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
-import Navbar from '../components/Navbar';
 
-const Home = () => {
+const HomePage = () => {
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Navbar />
-      
-      {/* Hero Section */}
-      <div className="relative bg-gradient-to-r from-blue-600 to-indigo-700 overflow-hidden">
-        <div className="max-w-7xl mx-auto">
-          <div className="relative z-10 pb-8 sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
-            <main className="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
-              <div className="sm:text-center lg:text-left">
-                <h1 className="text-4xl tracking-tight font-extrabold text-white sm:text-5xl md:text-6xl">
-                  <span className="block">Sécurisez votre</span>
-                  <span className="block text-indigo-200">application avec notre API</span>
-                </h1>
-                <p className="mt-3 text-base text-indigo-100 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
-                  Une solution complète pour l'authentification des utilisateurs avec inscription, validation par email et connexion sécurisée.
-                </p>
-                <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
-                  <div className="rounded-md shadow">
-                    <Link
-                      to="/register"
-                      className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-500 hover:bg-indigo-600 md:py-4 md:text-lg md:px-10 transition-colors"
-                    >
-                      S'inscrire
-                    </Link>
-                  </div>
-                  <div className="mt-3 sm:mt-0 sm:ml-3">
-                    <Link
-                      to="/login"
-                      className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-indigo-700 bg-white hover:bg-gray-50 md:py-4 md:text-lg md:px-10 transition-colors"
-                    >
-                      Se connecter
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </main>
-          </div>
-        </div>
-        <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
-          <div className="h-56 w-full bg-indigo-800 sm:h-72 md:h-96 lg:w-full lg:h-full opacity-50 lg:opacity-70">
-            <div className="w-full h-full flex items-center justify-center">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-32 w-32 text-white opacity-20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-              </svg>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      {/* Features Section */}
-      <div className="py-12 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="lg:text-center">
-            <h2 className="text-base text-indigo-600 font-semibold tracking-wide uppercase">Fonctionnalités</h2>
-            <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-              Une authentification complète
-            </p>
-            <p className="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
-              Notre solution offre tout ce dont vous avez besoin pour sécuriser votre application.
-            </p>
-          </div>
-
-          <div className="mt-10">
-            <div className="space-y-10 md:space-y-0 md:grid md:grid-cols-3 md:gap-x-8 md:gap-y-10">
-              {/* Feature 1 */}
-              <div className="relative">
-                <div className="absolute flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
-                  </svg>
-                </div>
-                <div className="ml-16">
-                  <h3 className="text-lg leading-6 font-medium text-gray-900">Inscription</h3>
-                  <p className="mt-2 text-base text-gray-500">
-                    Créez un compte en quelques étapes simples pour accéder à toutes nos fonctionnalités.
-                  </p>
-                </div>
-              </div>
-
-              {/* Feature 2 */}
-              <div className="relative">
-                <div className="absolute flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </div>
-                <div className="ml-16">
-                  <h3 className="text-lg leading-6 font-medium text-gray-900">Validation</h3>
-                  <p className="mt-2 text-base text-gray-500">
-                    Validez votre compte avec le code reçu par email pour garantir la sécurité.
-                  </p>
-                </div>
-              </div>
-
-              {/* Feature 3 */}
-              <div className="relative">
-                <div className="absolute flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
-                  </svg>
-                </div>
-                <div className="ml-16">
-                  <h3 className="text-lg leading-6 font-medium text-gray-900">Connexion</h3>
-                  <p className="mt-2 text-base text-gray-500">
-                    Connectez-vous en toute sécurité pour accéder à votre espace personnel.
-                  </p>
-                </div>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+      {/* Navigation */}
+      <nav className="bg-white/80 backdrop-blur-md border-b border-gray-200 fixed w-full z-50">
+        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between h-16">
+            <div className="flex items-center">
+              <div className="text-2xl font-serif tracking-tight bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
+                Pensées<span className="text-indigo-600">.</span>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-      
-      {/* CTA Section */}
-      <div className="bg-indigo-50">
-        <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8 lg:flex lg:items-center lg:justify-between">
-          <h2 className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-            <span className="block">Prêt à commencer?</span>
-            <span className="block text-indigo-600">Créez votre compte dès maintenant.</span>
-          </h2>
-          <div className="mt-8 flex lg:mt-0 lg:flex-shrink-0">
-            <div className="inline-flex rounded-md shadow">
-              <Link
-                to="/register"
-                className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 transition-colors"
-              >
-                S'inscrire
-              </Link>
-            </div>
-            <div className="ml-3 inline-flex rounded-md shadow">
-              <Link
-                to="/login"
-                className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-indigo-50 transition-colors"
-              >
+            <div className="flex items-center space-x-6">
+              <Link to="/login" className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
                 Se connecter
               </Link>
+              <Link
+                to="/register"
+                className="inline-flex items-center justify-center px-5 py-2 border-2 border-indigo-600 text-sm font-medium rounded-lg text-indigo-600 bg-transparent hover:bg-indigo-600 hover:text-white transition-all duration-200"
+              >
+                Commencer
+              </Link>
             </div>
           </div>
         </div>
+      </nav>
+
+      {/* Hero Section */}
+      <div className="pt-32 pb-20">
+        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto relative">
+            <div className="absolute -top-20 left-1/2 transform -translate-x-1/2 w-40 h-40 bg-indigo-100 rounded-full filter blur-3xl opacity-30"></div>
+            <h1 className="text-6xl sm:text-7xl font-serif tracking-tight text-gray-900 mb-8 leading-tight relative">
+              Partagez vos <span className="relative">idées<span className="absolute -bottom-2 left-0 w-full h-1 bg-indigo-200"></span></span> avec le monde
+            </h1>
+            <p className="text-xl text-gray-600 mb-12 leading-relaxed max-w-2xl mx-auto">
+              Une plateforme unique où chaque voix compte, où chaque histoire mérite d'être racontée.
+            </p>
+            <Link
+              to="/register"
+              className="inline-flex items-center justify-center px-8 py-3 text-base font-medium rounded-lg text-white bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 transform hover:-translate-y-0.5 transition-all duration-200 shadow-lg hover:shadow-xl"
+            >
+              Commencer à écrire
+            </Link>
+          </div>
+        </div>
       </div>
+
+      {/* Featured Section */}
+      <div className="py-20">
+        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl font-serif mb-12 text-center relative inline-block">
+            <span className="relative z-10">Découvertes du moment</span>
+            <span className="absolute bottom-0 left-0 w-full h-1 bg-indigo-100"></span>
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            {/* Featured Card 1 */}
+            <article className="group cursor-pointer bg-white rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100">
+              <div className="mb-4">
+                <div className="flex items-center space-x-3">
+                  <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-indigo-100 to-indigo-50 overflow-hidden p-0.5">
+                    <img src="https://source.unsplash.com/random/100x100?face-1" alt="" className="h-full w-full object-cover rounded-lg" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-gray-900">John Doe</p>
+                    <p className="text-xs text-gray-500">12 Dec · 5 min</p>
+                  </div>
+                </div>
+              </div>
+              <h3 className="text-xl font-serif text-gray-900 mb-2 group-hover:text-indigo-600 transition-colors duration-200">
+                L'art de l'innovation consciente
+              </h3>
+              <p className="text-gray-600 line-clamp-3 text-base leading-relaxed mb-4">
+                Explorer les nouvelles frontières de la créativité tout en restant fidèle à ses valeurs...
+              </p>
+              <div className="flex items-center space-x-4">
+                <span className="inline-flex items-center px-3 py-1 rounded-lg text-xs font-medium bg-indigo-50 text-indigo-700">
+                  Innovation
+                </span>
+                <span className="text-xs text-indigo-400">
+                  ✦ Sélection
+                </span>
+              </div>
+            </article>
+
+            {/* Featured Card 2 */}
+            <article className="group cursor-pointer bg-white rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100">
+              <div className="mb-4">
+                <div className="flex items-center space-x-3">
+                  <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-indigo-100 to-indigo-50 overflow-hidden p-0.5">
+                    <img src="https://source.unsplash.com/random/100x100?face-2" alt="" className="h-full w-full object-cover rounded-lg" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-gray-900">Marie Claire</p>
+                    <p className="text-xs text-gray-500">11 Dec · 8 min</p>
+                  </div>
+                </div>
+              </div>
+              <h3 className="text-xl font-serif text-gray-900 mb-2 group-hover:text-indigo-600 transition-colors duration-200">
+                Le minimalisme digital
+              </h3>
+              <p className="text-gray-600 line-clamp-3 text-base leading-relaxed mb-4">
+                Repenser notre relation avec la technologie pour une vie plus équilibrée...
+              </p>
+              <div className="flex items-center space-x-4">
+                <span className="inline-flex items-center px-3 py-1 rounded-lg text-xs font-medium bg-indigo-50 text-indigo-700">
+                  Bien-être
+                </span>
+                <span className="text-xs text-indigo-400">
+                  ✦ Tendance
+                </span>
+              </div>
+            </article>
+
+            {/* Featured Card 3 */}
+            <article className="group cursor-pointer bg-white rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100">
+              <div className="mb-4">
+                <div className="flex items-center space-x-3">
+                  <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-indigo-100 to-indigo-50 overflow-hidden p-0.5">
+                    <img src="https://source.unsplash.com/random/100x100?face-3" alt="" className="h-full w-full object-cover rounded-lg" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-gray-900">Sophie Martin</p>
+                    <p className="text-xs text-gray-500">10 Dec · 6 min</p>
+                  </div>
+                </div>
+              </div>
+              <h3 className="text-xl font-serif text-gray-900 mb-2 group-hover:text-indigo-600 transition-colors duration-200">
+                L'avenir de l'apprentissage
+              </h3>
+              <p className="text-gray-600 line-clamp-3 text-base leading-relaxed mb-4">
+                Comment la technologie transforme notre façon d'apprendre et de grandir...
+              </p>
+              <div className="flex items-center space-x-4">
+                <span className="inline-flex items-center px-3 py-1 rounded-lg text-xs font-medium bg-indigo-50 text-indigo-700">
+                  Éducation
+                </span>
+                <span className="text-xs text-indigo-400">
+                  ✦ Populaire
+                </span>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+
+      {/* Footer */}
+      <footer className="bg-white/50 backdrop-blur-sm border-t border-gray-200">
+        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div className="space-y-4">
+              <h4 className="text-sm font-semibold text-gray-900">À propos</h4>
+              <ul className="space-y-3">
+                <li>
+                  <a href="#" className="text-sm text-gray-600 hover:text-indigo-600 transition-colors">
+                    Notre vision
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-sm text-gray-600 hover:text-indigo-600 transition-colors">
+                    L'équipe
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div className="space-y-4">
+              <h4 className="text-sm font-semibold text-gray-900">Support</h4>
+              <ul className="space-y-3">
+                <li>
+                  <a href="#" className="text-sm text-gray-600 hover:text-indigo-600 transition-colors">
+                    Aide
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-sm text-gray-600 hover:text-indigo-600 transition-colors">
+                    Contact
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div className="space-y-4">
+              <h4 className="text-sm font-semibold text-gray-900">Légal</h4>
+              <ul className="space-y-3">
+                <li>
+                  <a href="#" className="text-sm text-gray-600 hover:text-indigo-600 transition-colors">
+                    Conditions
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-sm text-gray-600 hover:text-indigo-600 transition-colors">
+                    Confidentialité
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div className="space-y-4">
+              <h4 className="text-sm font-semibold text-gray-900">Ressources</h4>
+              <ul className="space-y-3">
+                <li>
+                  <a href="#" className="text-sm text-gray-600 hover:text-indigo-600 transition-colors">
+                    Guide
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-sm text-gray-600 hover:text-indigo-600 transition-colors">
+                    Actualités
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div className="mt-12 pt-8 border-t border-gray-200">
+            <p className="text-sm text-gray-500 text-center">
+              © 2024 Pensées. Tous droits réservés.
+            </p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };
 
-export default Home; 
+export default HomePage; 
